@@ -24,16 +24,32 @@ const Users = ({ usersPromise }) => {
                 if (data.insertedId) {
                     newUser._id = data.insertedId;
                     const newUsers = [...users, newUser];
-                    console.log(data,'dta',newUsers);
+                    console.log(data, 'dta', newUsers);
                     setUsers(newUsers)
                     alert('user added')
                 }
                 // e.target.reset()
             })
     }
+
+    const handleUserDelete = (id) => {
+        fetch(`http://localhost:3000/users/${id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount) {
+                    const remainingUsers = users.filter(user => user._id !== id);
+                    setUsers(remainingUsers)
+                    console.log('after delete', data)
+                }
+            })
+    }
+
     return (
         <div>
             <div>
+                <h2>Users : {users.length}</h2>
                 <form onSubmit={handleAddUser}>
                     <input type="text" name="name" id="" /><br />
                     <input type="email" name="email" id="" /><br />
@@ -41,7 +57,11 @@ const Users = ({ usersPromise }) => {
                 </form>
             </div>
             {
-                users.map(user=> <p key={user._id}>{user.name} : {user.email}</p>)
+                users.map(user => <p
+                    key={user._id}>
+                    {user.name} : {user.email}
+                    <button onClick={() => handleUserDelete(user._id)}>X</button>
+                </p>)
             }
         </div>
     );
