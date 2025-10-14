@@ -1,4 +1,5 @@
 import { use, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Users = ({ usersPromise }) => {
     const usersData = use(usersPromise)
@@ -59,7 +60,8 @@ const Users = ({ usersPromise }) => {
             {
                 users.map(user => <p
                     key={user._id}>
-                    {user.name} : {user.email}
+                    {user.name} : {user.email} <br />
+                    <Link to={`/users/${user._id}`}>Details</Link> <br />
                     <button onClick={() => handleUserDelete(user._id)}>X</button>
                 </p>)
             }
