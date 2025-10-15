@@ -58,12 +58,13 @@ const Users = ({ usersPromise }) => {
                 </form>
             </div>
             {
-                users.map(user => <p
+                users.map(user => <div style={{border : '2px solid #646cff',borderRadius: '14px', margin:'6px',padding:'10px'}}
                     key={user._id}>
                     {user.name} : {user.email} <br />
                     <Link to={`/users/${user._id}`}>Details</Link> <br />
+                    <Link to={`/update/${user._id}`}>Edit</Link> <br />
                     <button onClick={() => handleUserDelete(user._id)}>X</button>
-                </p>)
+                </div>)
             }
         </div>
     );
